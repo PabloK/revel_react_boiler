@@ -1,6 +1,6 @@
 ### Start the web server:
 
-    revel run myapp
+    revel run rrb
 
    Run with <tt>--help</tt> for options.
 
