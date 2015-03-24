@@ -1,6 +1,5 @@
-define(["jquery", "react", "cookies"], function($,react,cookies) {
+define(["jquery", "react", "cookies","log"], function($,react,cookies,log) {
     // Require.js has loaded all dependencies
-    console.log(cookies);
     $(function() {
         $('body');
     });

@@ -19,6 +19,9 @@ requirejs.config({
 		],
 		cookies: [
 		'lib/cookie-1.2.1.min'
+		],
+		log: [
+		'log'
 		]
 	}
 });
