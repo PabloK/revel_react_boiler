@@ -19,12 +19,10 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 
-	// Start config manager 
+	// Start config manager
 	// ** ConfigManager should automaticly prioritize config in this order
 	// ** Env > JSON From File > Default config set in manager
 	// ** To get env os.Getenv("BAR"), To get file import "encoding/json"
-	
-	
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	// revel.OnAppStart(InitDB)
