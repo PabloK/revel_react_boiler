@@ -3,6 +3,10 @@
     revel run rrb
 
    Run with <tt>--help</tt> for options.
+	 
+### Generate documentation
+
+    godoc -html rrb/package/<package_to_generate_doc_for> > doc/<output.html>
 
 ### Description of Contents
 

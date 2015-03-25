@@ -23,7 +23,7 @@ func (t *AppTest) TestThatIndexPageWorks() {
 
 func (t *AppTest) TestThatEnvVarsAreSetFromJsonConfig() {
 	var c = configmanager.New()
-	var conf = c.Get_Config()
+	var conf = c.GetConfig()
 	for k, val := range conf {
 		fmt.Println(k)
 		fmt.Println(val)
