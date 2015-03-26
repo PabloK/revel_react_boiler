@@ -3,6 +3,10 @@
     revel run rrb
 
    Run with <tt>--help</tt> for options.
+   
+### Run the tests:
+
+    revel test rrb
 	 
 ### Generate documentation
 
@@ -10,7 +14,7 @@
 
 ### Description of Contents
 
-The default directory structure of a generated Revel application:
+The directory structure:
 
     myapp               App root
       app               App sources
@@ -24,6 +28,9 @@ The default directory structure of a generated Revel application:
         app.conf        Main configuration file
         routes          Routes definition
       messages          Message files
+      packages		Custom go packages
+      LICENSES		external licenses
+      LICENSE		this projects license
       public            Public assets
         css             CSS files
         js              Javascript files
@@ -55,10 +62,12 @@ test
 
     Tests are kept in the tests directory. Revel provides a testing framework that makes it easy to write and run functional tests against your application.
 
-### Follow the guidelines to start developing your application:
-
-* The README file created within your application.
+### For more information see:
 * The [Getting Started with Revel](http://revel.github.io/tutorial/index.html).
 * The [Revel guides](http://revel.github.io/manual/index.html).
 * The [Revel sample apps](http://revel.github.io/samples/index.html).
 * The [API documentation](http://revel.github.io/docs/godoc/index.html).
+* The [react docs](http://facebook.github.io/react/docs/getting-started.html).
+* The [flux docs](http://facebook.github.io/flux/docs/overview.html).
+* The [jquery docs](http://api.jquery.com/).
+* The [requiurejs webpage](http://requirejs.org/).
