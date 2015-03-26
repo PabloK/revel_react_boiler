@@ -17,6 +17,10 @@ requirejs.config({
 		//If the CDN location fails, load from this location
 		'lib/react-0.13.1.min'
 		],
+		flux: [	
+    //TODO: Find CDN for flux
+		'lib/flux-2.0.2'
+		],
 		cookies: [
 		'lib/cookie-1.2.1.min'
 		],
