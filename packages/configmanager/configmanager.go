@@ -30,12 +30,21 @@ var instantiated *conf_manager = nil
 var config ConfigHash
 
 // New instantiates the configmanager and reads the configuration into memory.
-func New() *conf_manager {
+func New(arguments ...string) *conf_manager {
+
+	var configFilePath = "conf/environment.json"
+	if len(arguments) > 0 {
+		configFilePath = arguments[0]
+	}
+
 	if instantiated == nil {
+
 		// Get configuration from JSON
-		var configJSON = getJSONConfig()
+		var configJSON = getJSONConfig(configFilePath)
+
 		// Get configuration from ENV
 		var configENV = getENVConfig()
+
 		// prioritize according to source and store it
 		config = prioritizeConfig(configJSON, configENV)
 
@@ -51,11 +60,10 @@ func (c *conf_manager) GetConfig() ConfigHash {
 
 // getJSONConfig, private method that returns the config found in
 // the specified JSON file.
-func getJSONConfig() ConfigHash {
+func getJSONConfig(configFilePath string) ConfigHash {
 	var data ConfigHash
 
-	// TODO: Get config file location from env
-	file, err := ioutil.ReadFile("conf/environment.json")
+	file, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +79,6 @@ func getENVConfig() ConfigHash {
 	return a
 }
 
-func prioritizeConfig(c ConfigHash, d ConfigHash) ConfigHash {
-	var a ConfigHash
+func prioritizeConfig(a ConfigHash, b ConfigHash) ConfigHash {
 	return a
 }
