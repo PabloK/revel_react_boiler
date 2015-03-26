@@ -24,31 +24,35 @@ type conf_manager struct {
 	O interface{}
 }
 
+type ConfigHash map[string]interface{}
+
 var instantiated *conf_manager = nil
-var config map[string]interface{}
+var config ConfigHash
 
 // New instantiates the configmanager and reads the configuration into memory.
 func New() *conf_manager {
 	if instantiated == nil {
 		// Get configuration from JSON
-		config = getJSONConfig()
-		// Get configuration from environment
-		// Overwrite JSON conf
-		// Store config
+		var configJSON = getJSONConfig()
+		// Get configuration from ENV
+		var configENV = getENVConfig()
+		// prioritize according to source and store it
+		config = prioritizeConfig(configJSON, configENV)
+
 		instantiated = new(conf_manager)
 	}
 	return instantiated
 }
 
 // GetConfig returns the configuration as string map
-func (c *conf_manager) GetConfig() map[string]interface{} {
+func (c *conf_manager) GetConfig() ConfigHash {
 	return config
 }
 
 // getJSONConfig, private method that returns the config found in
 // the specified JSON file.
-func getJSONConfig() map[string]interface{} {
-	var data map[string]interface{}
+func getJSONConfig() ConfigHash {
+	var data ConfigHash
 
 	// TODO: Get config file location from env
 	file, err := ioutil.ReadFile("conf/environment.json")
@@ -60,4 +64,14 @@ func getJSONConfig() map[string]interface{} {
 		log.Fatal(err)
 	}
 	return data
+}
+
+func getENVConfig() ConfigHash {
+	var a ConfigHash
+	return a
+}
+
+func prioritizeConfig(c ConfigHash, d ConfigHash) ConfigHash {
+	var a ConfigHash
+	return a
 }
