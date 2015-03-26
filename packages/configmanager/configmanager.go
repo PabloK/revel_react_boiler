@@ -15,7 +15,9 @@
 package configmanager
 
 import (
+	"bytes"
 	"encoding/json"
+	"github.com/revel/revel"
 	"io/ioutil"
 	"log"
 )
@@ -39,13 +41,18 @@ func New(arguments ...string) *conf_manager {
 
 	if instantiated == nil {
 
-		// Get configuration from JSON
+		var msg bytes.Buffer
+		msg.WriteString("Reading configuration from ")
+		msg.WriteString(configFilePath)
+		revel.TRACE.Printf("%s", msg.String())
+		// Get configuration from JSON file
 		var configJSON = getJSONConfig(configFilePath)
 
+		revel.TRACE.Printf("%s", "Reading configuration from ENV")
 		// Get configuration from ENV
 		var configENV = getENVConfig()
 
-		// prioritize according to source and store it
+		// prioritize according to source
 		config = prioritizeConfig(configJSON, configENV)
 
 		instantiated = new(conf_manager)
