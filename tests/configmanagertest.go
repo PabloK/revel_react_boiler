@@ -27,6 +27,8 @@ func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromEnvironment() {
 
 	_, keyExists := conf["TESTING_ENV_CONFIG"]
 	t.Assert(keyExists)
+
+	t.Assert(conf["TESTING_ENV_CONFIG"] == "TESTING")
 }
 
 func (t *ConfigManagerTest) TestThatEnvironmentEnvVarsArePrioritized() {
