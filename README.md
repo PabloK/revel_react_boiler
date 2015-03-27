@@ -46,6 +46,7 @@ conf
 
     * app.conf, the main configuration file for the application, which contains standard configuration parameters
     * routes, the routes definition file.
+    * environment.json, custom configuration which can be overriden with environment variables use the package configurationmanager to get these in the application.
 
 
 messages
