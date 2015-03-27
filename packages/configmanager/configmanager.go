@@ -20,6 +20,8 @@ import (
 	"github.com/revel/revel"
 	"io/ioutil"
 	"log"
+	"os"
+	"strings"
 )
 
 type conf_manager struct {
@@ -82,8 +84,15 @@ func getJSONConfig(configFilePath string) ConfigHash {
 }
 
 func getENVConfig() ConfigHash {
-	var a ConfigHash
-	return a
+	var config ConfigHash = make(map[string]interface{})
+	env := os.Environ()
+	for _, str := range env {
+		envarr := strings.Split(str, "=")
+		k := envarr[0]
+		v := envarr[1]
+		config[k] = v
+	}
+	return config
 }
 
 func prioritizeConfig(a ConfigHash, b ConfigHash) ConfigHash {

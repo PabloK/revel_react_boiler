@@ -8,6 +8,7 @@ type ConfigManagerTest struct {
 }
 
 func (t *ConfigManagerTest) Before() {
+	// Set ENV TESTING_ENV_CONFIG = TESTING
 }
 
 func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromJsonConfig() {
@@ -20,7 +21,12 @@ func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromJsonConfig() {
 }
 
 func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromEnvironment() {
-	t.Assert(true)
+	var c = configmanager.New("tests/test-conf.json")
+	var conf = c.GetConfig()
+	t.Assert(len(conf) >= 1)
+
+	_, keyExists := conf["TESTING_ENV_CONFIG"]
+	t.Assert(keyExists)
 }
 
 func (t *ConfigManagerTest) TestThatEnvironmentEnvVarsArePrioritized() {
@@ -28,4 +34,5 @@ func (t *ConfigManagerTest) TestThatEnvironmentEnvVarsArePrioritized() {
 }
 
 func (t *ConfigManagerTest) After() {
+	// Unset ENV TESTING_ENV_CONFIG = TESTING
 }

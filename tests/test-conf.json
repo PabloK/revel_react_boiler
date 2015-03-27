@@ -1,3 +1,4 @@
 {
-  "db" : "mongo" 
+  "db" : "mongo",
+  "TESTING_ENV_CONFIG" : "INVALID"
 }
