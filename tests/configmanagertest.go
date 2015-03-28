@@ -1,26 +1,33 @@
 package tests
 
-import "github.com/revel/revel"
-import "rrb/packages/configmanager"
+import (
+	"github.com/revel/revel"
+	"os"
+	"rrb/packages/configmanager"
+)
 
 type ConfigManagerTest struct {
 	revel.TestSuite
 }
 
+// Setup
 func (t *ConfigManagerTest) Before() {
-	// Set ENV TESTING_ENV_CONFIG = TESTING
+	os.Setenv("TESTING_ENV_CONFIG", "TESTING")
+	configmanager.ReInitializeConf()
 }
 
 func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromJsonConfig() {
 	var c = configmanager.New("tests/test-conf.json")
 	var conf = c.GetConfig()
+
 	t.Assert(len(conf) >= 1)
 
 	_, keyExists := conf["db"]
 	t.Assert(keyExists)
 }
 
-func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromEnvironment() {
+// Test that if ENV var with same name as JSON var is set it overwrites the JSON var
+func (t *ConfigManagerTest) TestThatEnvVarsOverwriteJSONConfig() {
 	var c = configmanager.New("tests/test-conf.json")
 	var conf = c.GetConfig()
 	t.Assert(len(conf) >= 1)
@@ -31,10 +38,20 @@ func (t *ConfigManagerTest) TestThatEnvVarsAreSetFromEnvironment() {
 	t.Assert(conf["TESTING_ENV_CONFIG"] == "TESTING")
 }
 
-func (t *ConfigManagerTest) TestThatEnvironmentEnvVarsArePrioritized() {
-	t.Assert(true)
+// Test that if env vars are unset the JSON config remains
+func (t *ConfigManagerTest) TestThatJSONKeysRemainWhenNoEnvVarIsSet() {
+	os.Unsetenv("TESTING_ENV_CONFIG")
+
+	var c = configmanager.New("tests/test-conf.json")
+	var conf = c.GetConfig()
+	t.Assert(len(conf) >= 1)
+
+	_, keyExists := conf["TESTING_ENV_CONFIG"]
+	t.Assert(keyExists)
+	t.Assert(conf["TESTING_ENV_CONFIG"] == "INVALID")
 }
 
+// Taredown
 func (t *ConfigManagerTest) After() {
-	// Unset ENV TESTING_ENV_CONFIG = TESTING
+	os.Unsetenv("TESTING_ENV_CONFIG")
 }

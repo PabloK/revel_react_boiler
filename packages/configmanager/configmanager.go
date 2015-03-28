@@ -33,6 +33,10 @@ type ConfigHash map[string]interface{}
 var instantiated *conf_manager = nil
 var config ConfigHash
 
+func ReInitializeConf() {
+	instantiated = nil
+}
+
 // New instantiates the configmanager and reads the configuration into memory.
 func New(arguments ...string) *conf_manager {
 
@@ -55,7 +59,7 @@ func New(arguments ...string) *conf_manager {
 		var configENV = getENVConfig()
 
 		// prioritize according to source
-		config = prioritizeConfig(configJSON, configENV)
+		config = prioritizeConfig(configENV, configJSON)
 
 		instantiated = new(conf_manager)
 	}
@@ -95,6 +99,12 @@ func getENVConfig() ConfigHash {
 	return config
 }
 
-func prioritizeConfig(a ConfigHash, b ConfigHash) ConfigHash {
-	return a
+func prioritizeConfig(env ConfigHash, json ConfigHash) ConfigHash {
+	for k, _ := range json {
+		_, keyExists := env[k]
+		if keyExists {
+			json[k] = env[k]
+		}
+	}
+	return json
 }
