@@ -1,6 +1,11 @@
 package app
 
-import "github.com/revel/revel"
+import (
+	"github.com/revel/revel"
+	"rrb/packages/configmanager"
+)
+
+var conf configmanager.ConfigHash
 
 func init() {
 
@@ -19,19 +24,20 @@ func init() {
 		revel.CompressFilter,          // Compress the result.
 		revel.ActionInvoker,           // Invoke the action.
 	}
-
-	// Start config manager
-	// ** ConfigManager should automaticly prioritize config in this order
-	// ** Env > JSON From File > Default config set in manager
-	// ** To get env os.Getenv("BAR"), To get file import "encoding/json"
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
+	revel.OnAppStart(initConfig)
 
-	// TODO: Configurate max-age for resources
 	// Copy to own controller "revel/modules/static/app/controllers/static.go"
 	// Edit to set max-age
+}
+
+func initConfig() {
+	var c = configmanager.New("conf/environment.json")
+	conf = c.GetConfig()
+	print(conf["db_connection_string"])
 }
 
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {

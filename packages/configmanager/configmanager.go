@@ -28,7 +28,8 @@ type conf_manager struct {
 	O interface{}
 }
 
-type ConfigHash map[string]interface{}
+type ConfigHash map[string]string
+type confighash map[string]interface{}
 
 var instantiated *conf_manager = nil
 var config ConfigHash
@@ -40,6 +41,7 @@ func ReInitializeConf() {
 // New instantiates the configmanager and reads the configuration into memory.
 func New(arguments ...string) *conf_manager {
 
+	config = make(map[string]string)
 	var configFilePath = "conf/environment.json"
 	if len(arguments) > 0 {
 		configFilePath = arguments[0]
@@ -50,7 +52,7 @@ func New(arguments ...string) *conf_manager {
 		var msg bytes.Buffer
 		msg.WriteString("Reading configuration from ")
 		msg.WriteString(configFilePath)
-		revel.TRACE.Printf("%s", msg.String())
+		revel.INFO.Printf("%s", msg.String())
 		// Get configuration from JSON file
 		var configJSON = getJSONConfig(configFilePath)
 
@@ -59,7 +61,11 @@ func New(arguments ...string) *conf_manager {
 		var configENV = getENVConfig()
 
 		// prioritize according to source
-		config = prioritizeConfig(configENV, configJSON)
+		var prioConf = prioritizeConfig(configENV, configJSON)
+
+		for k, v := range prioConf {
+			config[k] = v.(string)
+		}
 
 		instantiated = new(conf_manager)
 	}
@@ -73,8 +79,8 @@ func (c *conf_manager) GetConfig() ConfigHash {
 
 // getJSONConfig, private method that returns the config found in
 // the specified JSON file.
-func getJSONConfig(configFilePath string) ConfigHash {
-	var data ConfigHash
+func getJSONConfig(configFilePath string) confighash {
+	var data confighash
 
 	file, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
@@ -87,19 +93,19 @@ func getJSONConfig(configFilePath string) ConfigHash {
 	return data
 }
 
-func getENVConfig() ConfigHash {
-	var config ConfigHash = make(map[string]interface{})
+func getENVConfig() confighash {
+	var envconfig confighash = make(map[string]interface{})
 	env := os.Environ()
 	for _, str := range env {
 		envarr := strings.Split(str, "=")
 		k := envarr[0]
 		v := envarr[1]
-		config[k] = v
+		envconfig[k] = v
 	}
-	return config
+	return envconfig
 }
 
-func prioritizeConfig(env ConfigHash, json ConfigHash) ConfigHash {
+func prioritizeConfig(env confighash, json confighash) confighash {
 	for k, _ := range json {
 		_, keyExists := env[k]
 		if keyExists {
