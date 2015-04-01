@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"github.com/revel/revel"
 	"io/ioutil"
-	"log"
 	"os"
 	"strings"
 )
@@ -80,15 +79,15 @@ func (c *conf_manager) GetConfig() ConfigHash {
 // getJSONConfig, private method that returns the config found in
 // the specified JSON file.
 func getJSONConfig(configFilePath string) confighash {
-	var data confighash
+	var data confighash = make(map[string]interface{})
 
 	file, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
-		log.Fatal(err)
+		revel.ERROR.Printf("%s", err)
 	}
 	err = json.Unmarshal(file, &data)
 	if err != nil {
-		log.Fatal(err)
+		revel.ERROR.Printf("%s", err)
 	}
 	return data
 }

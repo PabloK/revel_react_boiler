@@ -25,10 +25,8 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 	// register startup functions with OnAppStart
-	// ( order dependent )
-	// revel.OnAppStart(InitDB)
-	// revel.OnAppStart(FillCache)
 	revel.OnAppStart(initConfig)
+	// revel.OnAppStart(InitDB)
 
 	// Copy to own controller "revel/modules/static/app/controllers/static.go"
 	// Edit to set max-age
@@ -37,7 +35,10 @@ func init() {
 func initConfig() {
 	var c = configmanager.New("conf/environment.json")
 	conf = c.GetConfig()
-	print(conf["db_connection_string"])
+}
+
+func initDB() {
+	// TODO: Initialize db connection with mgo package
 }
 
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {

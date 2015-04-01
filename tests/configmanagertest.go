@@ -51,6 +51,14 @@ func (t *ConfigManagerTest) TestThatJSONKeysRemainWhenNoEnvVarIsSet() {
 	t.Assert(conf["TESTING_ENV_CONFIG"] == "INVALID")
 }
 
+// Test that execution is not halted when calling with a non existing file
+func (t *ConfigManagerTest) TestThatExecutinIsNotHalted() {
+
+	var c = configmanager.New("tests/non-existing-conf.json")
+	var conf = c.GetConfig()
+	t.Assert(len(conf) == 0)
+}
+
 // Taredown
 func (t *ConfigManagerTest) After() {
 	os.Unsetenv("TESTING_ENV_CONFIG")
