@@ -1,11 +1,17 @@
 package app
 
 import (
+	"fmt"
 	"github.com/revel/revel"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+	"log"
 	"rrb/packages/configmanager"
 )
 
+// Globally available variables
 var conf configmanager.ConfigHash
+var session mgo.Session
 
 func init() {
 
@@ -26,7 +32,7 @@ func init() {
 	}
 	// register startup functions with OnAppStart
 	revel.OnAppStart(initConfig)
-	// revel.OnAppStart(InitDB)
+	revel.OnAppStart(initDB)
 
 	// Copy to own controller "revel/modules/static/app/controllers/static.go"
 	// Edit to set max-age
@@ -37,8 +43,17 @@ func initConfig() {
 	conf = c.GetConfig()
 }
 
+// Initialize the database connection pool
 func initDB() {
-	// TODO: Initialize db connection with mgo package
+	session, err := mgo.Dial(conf["DB_CONNECTION_STRING"])
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+
+	session.SetMode(mgo.Monotonic, true)
+
+	c := session.DB("test").C("people")
 }
 
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {

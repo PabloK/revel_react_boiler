@@ -64,6 +64,16 @@ test
 
     Tests are kept in the tests directory. Revel provides a testing framework that makes it easy to write and run functional tests against your application.
 
+### Prerequisites
+
+go installation
+revel installation
+mgo "mongoDB library for go" (go get gopkg.in/mgo.v2)
+
+### Installation
+
+TODO: write installation instructions
+
 ### For more information see:
 * The [Getting Started with Revel](http://revel.github.io/tutorial/index.html).
 * The [Revel guides](http://revel.github.io/manual/index.html).
