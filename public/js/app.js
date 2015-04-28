@@ -30,6 +30,4 @@ requirejs.config({
 	}
 });
 
-// TODO: Add Hammer.js
-// TODO: Remove bootstrap in favour of MATERIAL
 requirejs(["main"]);
