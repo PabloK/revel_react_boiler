@@ -3,11 +3,6 @@ requirejs.config({
 	enforceDefine: true,
 	"baseUrl": "public/js/",
 	paths: {
-    materialize: [
-    '//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min',
-    //If the CDN location fails, load from this location
-    'lib/materialize.min'
-    ],
 		jquery: [
 		'//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min',
 		//If the CDN location fails, load from this location
@@ -28,6 +23,6 @@ requirejs.config({
 		log: [
 		'log'
 		]
-	},
+	}
 });
 require(["main"]);
