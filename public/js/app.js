@@ -1,4 +1,5 @@
 requirejs.config({
+  waitSeconds: 1,
 	enforceDefine: true,
 	"baseUrl": "public/js/",
 	paths: {
@@ -24,10 +25,20 @@ requirejs.config({
 		cookies: [
 		'lib/cookie-1.2.1.min'
 		],
+		Hammer: [
+    'https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min',
+		//If the CDN location fails, load from this location
+    'lib/hammerjs.min'
+		],
 		log: [
 		'log'
 		]
-	}
+	},
+  shim: {
+    'materialize': { 
+      deps: ['jquery', 'Hammer']
+    }
+  }
 });
 
 requirejs(["main"]);
