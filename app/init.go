@@ -2,13 +2,12 @@ package app
 
 import (
 	"github.com/revel/revel"
-	"gopkg.in/mgo.v2"
 	"rrb/packages/configmanager"
+	"rrb/packages/sessionstore"
 )
 
 // Globally available variables
 var configManager configmanager.ConfigHash
-var session mgo.Session
 
 func init() {
 
@@ -42,17 +41,10 @@ func initConfig() {
 
 // Initialize the database connection pool
 func initDB() {
-
-	// TODO: Encapsulate session
-	session, err := mgo.Dial(configManager["DB_CONNECTION_STRING"])
-	if err != nil {
-		panic(err)
-	}
+	var session = sessionstore.GetSession(configManager["DB_CONNECTION_STRING"])
 	defer session.Close()
-
-	session.SetMode(mgo.Monotonic, true)
-
-	//c := session.DB("test").C("people")
+	names, _ := session.DatabaseNames()
+	revel.INFO.Println("Available databases: ", names)
 }
 
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {

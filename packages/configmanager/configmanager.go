@@ -26,18 +26,18 @@ import (
 	"strings"
 )
 
-type conf_manager struct {
+type configManagerType struct {
 	O interface{}
 }
 
 type ConfigHash map[string]string
 type confighash map[string]interface{}
 
-var instantiated *conf_manager = nil
+var instantiated *configManagerType = nil
 var config ConfigHash
 
 // New instantiates the configmanager and reads the configuration into memory.
-func New(arguments ...string) *conf_manager {
+func New(arguments ...string) *configManagerType {
 
 	config = make(map[string]string)
 	var configFilePath = "conf/environment.json"
@@ -65,13 +65,13 @@ func New(arguments ...string) *conf_manager {
 			config[k] = v.(string)
 		}
 
-		instantiated = new(conf_manager)
+		instantiated = new(configManagerType)
 	}
 	return instantiated
 }
 
 // GetConfig returns the configuration as string map
-func (c *conf_manager) GetConfig() ConfigHash {
+func (c *configManagerType) GetConfig() ConfigHash {
 	return config
 }
 
