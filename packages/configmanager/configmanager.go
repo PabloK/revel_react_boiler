@@ -1,16 +1,19 @@
 // Copyright 2015 Pablo Karlssnon. All rights reserved.
 // Use of this source code is governed by a MIT-style
-// license that can be found in the LICENSE file.
+// license that can be found in the LICENSE file at https://github.com/PabloK/revel_react_boiler.
 
 /*
-  Package Configmanager implements configuration management with prioritized overwrite.
+  Package configmanager implements configuration management with prioritized overwrite from the environment.
 
-  Description
-  Configmanager imports configuration from file and overwrites defaults with data found in the ENV.
-  To use this package the env var RRB_CONFIG_FILE needs to be set to point to a JSON file containing
-  the configuration to be used. Onyl values in the JSON file will be imported to the manager.
+  When instantiated configmanager imports configuration from a JSON config file and the environment and makes it
+  available trough its interface. To use this package the environmnet variable RRB_CONFIG_FILE needs to point to
+  a JSON config file.
 
-  For an example JSON file see env.json in the rrb/conf folder.
+  Override of JSON configuration will takeplace at instantiation if the corresponding variable is set in the environment.
+
+  Variables not present in the JSON file will not be imported from the environment.
+
+  For an example JSON file see env.json found in the rrb/conf folder at https://github.com/PabloK/revel_react_boiler.
 */
 package configmanager
 
@@ -32,10 +35,6 @@ type confighash map[string]interface{}
 
 var instantiated *conf_manager = nil
 var config ConfigHash
-
-func ReInitializeConf() {
-	instantiated = nil
-}
 
 // New instantiates the configmanager and reads the configuration into memory.
 func New(arguments ...string) *conf_manager {
@@ -76,8 +75,12 @@ func (c *conf_manager) GetConfig() ConfigHash {
 	return config
 }
 
-// getJSONConfig, private method that returns the config found in
-// the specified JSON file.
+// discardConfig throws away the current configuration
+func discardConfig() {
+	instantiated = nil
+}
+
+// getJSONConfig returns the config found in the specified JSON file.
 func getJSONConfig(configFilePath string) confighash {
 	var data confighash = make(map[string]interface{})
 
@@ -92,6 +95,7 @@ func getJSONConfig(configFilePath string) confighash {
 	return data
 }
 
+// getENVConfig returns variables set in the environment.
 func getENVConfig() confighash {
 	var envconfig confighash = make(map[string]interface{})
 	env := os.Environ()
@@ -104,6 +108,7 @@ func getENVConfig() confighash {
 	return envconfig
 }
 
+// Overwrites JSON config with config values from the environment if corresponding variable exists in the environment config.
 func prioritizeConfig(env confighash, json confighash) confighash {
 	for k, _ := range json {
 		_, keyExists := env[k]

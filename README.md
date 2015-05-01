@@ -5,12 +5,19 @@
    Run with <tt>--help</tt> for options.
    
 ### Run the tests:
-
+To run integration tests
     revel test rrb
+To run package unit tests
+		go test -v ./packages/*
 	 
-### Generate documentation
+### View the package documentation
 
-    godoc -html rrb/package/<package_to_generate_doc_for> > doc/<output.html>
+If changes has been made in the packages folder
+		mkdir <GOROOT>\packages
+		copy packages <GOROOT>\packages
+Run the doc server
+    godoc -http:6060
+Browse to localhost:6060 to see the documentation
 
 ### Description of Contents
 
@@ -62,24 +69,50 @@ public
 
 test
 
-    Tests are kept in the tests directory. Revel provides a testing framework that makes it easy to write and run functional tests against your application.
+    Tests are kept in the tests directory and the package directory. Revel provides a testing framework that makes it easy to write and run functional tests against your application.
 
 ### Prerequisites
 
 go installation
 revel installation
 mgo "mongoDB library for go" (go get gopkg.in/mgo.v2)
+MongoDB database service
 
-### Installation
+### Development Installation
 
-TODO: write installation instructions
+#### Installing go
+See these instructions on how to install go (https://golang.org/doc/install)
+Make sure to use default directory.
+
+You can also take a look at thsese instructions (https://revel.github.io/tutorial/gettingstarted.html)
+
+#### Installing Revel
+If you did not already install revel according to these instructions (https://revel.github.io/tutorial/gettingstarted.html)
+Don't forget to install Git and Mercurial as mentioned in the guide above
+
+You do not need to create a new revel application.
+
+#### Install mgo
+Run the following command
+	go get gopkg.in/mgo.v2
+
+####Installing MongoDB as a service (Windows)
+For instructions see http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
+
+####Clone the rrb git repo into ../gocode/src/ (Using a git terminal)
+git clone git@github.com:PabloK/revel_react_boiler.git
+
+####Verifying the installation
+Start the webserver
+    revel run rrb
+Open a browser and surf to http://localhost:9000
 
 ### For more information see:
 * The [Getting Started with Revel](http://revel.github.io/tutorial/index.html).
 * The [Revel guides](http://revel.github.io/manual/index.html).
 * The [Revel sample apps](http://revel.github.io/samples/index.html).
 * The [API documentation](http://revel.github.io/docs/godoc/index.html).
-* The [react docs](http://facebook.github.io/react/docs/getting-started.html).
-* The [flux docs](http://facebook.github.io/flux/docs/overview.html).
-* The [jquery docs](http://api.jquery.com/).
-* The [requiurejs webpage](http://requirejs.org/).
+* The [React docs](http://facebook.github.io/react/docs/getting-started.html).
+* The [Flux docs](http://facebook.github.io/flux/docs/overview.html).
+* The [jQuery docs](http://api.jquery.com/).
+* The [Requirejs webpage](http://requirejs.org/).
