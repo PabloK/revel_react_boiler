@@ -1,6 +1,9 @@
 package configmanager
 
 import (
+	"github.com/revel/revel"
+	"io/ioutil"
+	"log"
 	"os"
 	"testing"
 )
@@ -9,6 +12,10 @@ import (
 func beforeTests() {
 	os.Setenv("TESTING_ENV_CONFIG", "TESTING")
 	discardConfig()
+	revel.INFO = log.New(ioutil.Discard, "INFO  ", log.Ldate|log.Ltime|log.Lshortfile)
+	revel.WARN = log.New(ioutil.Discard, "WARN  ", log.Ldate|log.Ltime|log.Lshortfile)
+	revel.ERROR = log.New(ioutil.Discard, "ERROR  ", log.Ldate|log.Ltime|log.Lshortfile)
+	revel.TRACE = log.New(ioutil.Discard, "TRACE  ", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
 // Taredown
