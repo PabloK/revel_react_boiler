@@ -1,6 +1,5 @@
-define(["react","actions/AppActions","stores/AppStore"], 
-function(React, AppDispatcher, EventEmitter, AppConstants, EventEmitter) {
-// var EventEmitter = require('events').EventEmitter;
+define(["react","eventemitter","dispatcher/AppDispatcher","constants/AppConstants"], 
+function(React, EventEmitter, AppDispatcher, AppConstants) {
 
   var _message = {}
 
@@ -8,9 +7,7 @@ function(React, AppDispatcher, EventEmitter, AppConstants, EventEmitter) {
     _message = data[0]
   }
 
-  EventEmitter = {};
-
-  return AppStore = $.extend({},EventEmitter.prototype, {
+  var AppStore = $.extend({},EventEmitter.prototype, {
 
     getMessage: function() {
       return _message;
@@ -42,9 +39,11 @@ function(React, AppDispatcher, EventEmitter, AppConstants, EventEmitter) {
         return true;
     }
 
-    ProductStore.emitChange();
+    AppStore.emitChange();
 
     return true;
 
   });
+
+  return AppStore;
 });

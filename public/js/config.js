@@ -9,7 +9,7 @@ requirejs.config({
 		'lib/jquery-2.1.3.min'
 		],
 		react: [	
-		'//cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min',
+		'//cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react',
 		//If the CDN location fails, load from this location
 		'lib/react-0.13.1.min'
 		],
@@ -19,6 +19,9 @@ requirejs.config({
 		],
 		cookies: [
 		'lib/cookie-1.2.1.min'
+		],
+		eventemitter: [
+		'lib/eventemitter2'
 		],
 		log: [
 		'log'

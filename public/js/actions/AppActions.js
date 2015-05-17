@@ -1,7 +1,7 @@
 define(["react", "dispatcher/AppDispatcher", "constants/AppConstants"],
 function(React, AppDispatcher, AppConstants) {
 
-  return AppActions = {
+  var AppActions = {
   
     setMessage: function (data) {
       AppDispatcher.handleAction({
@@ -10,4 +10,6 @@ function(React, AppDispatcher, AppConstants) {
       });
     }
   };
+
+  return AppActions;
 });

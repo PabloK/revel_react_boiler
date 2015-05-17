@@ -3,10 +3,12 @@ function(React, flux) {
 
   var AppDispatcher = new flux.Dispatcher();
 
-  return AppDispatcher.handleAction = function(action) {
+  AppDispatcher.handleAction = function(action) {
     this.dispatch({
       source: 'SET_MESSAGE',
       action: action
-    })
+    });
   };
+
+  return AppDispatcher;
 });

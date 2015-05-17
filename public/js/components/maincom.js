@@ -7,17 +7,17 @@ return React.createClass({
       AppActions.setMessage("LALA!")
     },
     componentDidMount: function(){
-      AppStore.addChangeListner(this._onchange);
+      AppStore.addChangeListner(this._onChange);
     },
     compnentWillUnmount: function() {
-      AppStore.removeChangeListner(this._onchange);
+      AppStore.removeChangeListner(this._onChange);
     },
 
     render:  function(){
       return React.createElement('input', {
         type: "button", 
         value:"Click Me",
-        onClick: "setMessage", 
+        onClick: AppActions.setMessage, 
       },"");
     },
 
