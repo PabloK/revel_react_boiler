@@ -1,5 +1,5 @@
-define(["react", "flux"],
-function(React, flux) {
+define(["react", "flux","log"],
+function(React, flux, log) {
 
   var AppDispatcher = new flux.Dispatcher();
 

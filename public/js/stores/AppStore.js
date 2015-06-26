@@ -1,5 +1,5 @@
-define(["react","eventemitter","dispatcher/AppDispatcher","constants/AppConstants"], 
-function(React, EventEmitter, AppDispatcher, AppConstants) {
+define(["react","eventemitter","dispatcher/AppDispatcher","constants/AppConstants","log"], 
+function(React, EventEmitter, AppDispatcher, AppConstants, log) {
 
   var _message = {}
 
@@ -11,6 +11,10 @@ function(React, EventEmitter, AppDispatcher, AppConstants) {
 
     getMessage: function() {
       return _message;
+    },
+
+    setMessage: function(msg) {
+      _message = msg;
     },
 
     emitChange: function(){
@@ -28,12 +32,14 @@ function(React, EventEmitter, AppDispatcher, AppConstants) {
   });
 
   AppDispatcher.register(function(payload){
+    
     var action = payload.action;
     var text;
+    log.info(action);
 
     switch(action.actionType) {
       case AppConstants.SET_MESSAGE:
-        alert(setMessage(action.data));
+        AppStore.setMessage(action.data);
       break;
       default:
         return true;

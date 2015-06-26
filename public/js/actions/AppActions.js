@@ -1,5 +1,5 @@
-define(["react", "dispatcher/AppDispatcher", "constants/AppConstants"],
-function(React, AppDispatcher, AppConstants) {
+define(["react", "dispatcher/AppDispatcher", "constants/AppConstants","log"],
+function(React, AppDispatcher, AppConstants,log) {
 
   var AppActions = {
   
